@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Commerce Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              'primary': '#0D6EFD',
+              'dark': '#1C1C1C',
+              'gray-900': '#1C1C1C',
+              'gray-800': '#505050',
+              'gray-600': '#505050',
+              'gray-500': '#8B96A5',
+              'gray-400': '#BDC4CD',
+              'gray-300': '#DEE2E7',
+              'gray-200': '#EFF2F4',
+              'gray-100': '#F7FAFC',
+              'blue': {
+                DEFAULT: '#0D6EFD',
+                light: '#E3F0FF'
+              },
+              'orange': {
+                DEFAULT: '#FF9017'
+              },
+              'green': {
+                DEFAULT: '#00B517'
+              },
+            }
+          }
+        }
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.5",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-gray-100">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
