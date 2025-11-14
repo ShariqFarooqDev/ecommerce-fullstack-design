@@ -57,8 +57,8 @@ const Footer: React.FC = () => {
           <div className="col-span-2 md:col-span-1">
             <h5 className="font-semibold mb-3">Get app</h5>
             <div className="space-y-2">
-                <a href="#"><img src="https://z.nooncdn.com/s/app/com/common/images/infos/ios-en.svg" alt="App Store" className="cursor-pointer" /></a>
-                <a href="#"><img src="https://z.nooncdn.com/s/app/com/common/images/infos/android-en.svg" alt="Google Play" className="cursor-pointer" /></a>
+                <a href="#"><img src="/images/appstore.svg" alt="App Store" className="cursor-pointer" /></a>
+                <a href="#" className="block"><img src="/images/playstore.svg" alt="Google Play" className="cursor-pointer block" /></a>
             </div>
           </div>
         </div>
