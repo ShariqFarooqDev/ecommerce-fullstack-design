@@ -1,8 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { HOME_CATEGORIES, DEALS_ITEMS, HOME_OUTDOOR_PRODUCTS, CONSUMER_ELECTRONICS_PRODUCTS, RECOMMENDED_ITEMS, EXTRA_SERVICES, SUPPLIERS } from '../constants';
+import { HOME_CATEGORIES, DEALS_ITEMS, HOME_OUTDOOR_PRODUCTS, CONSUMER_ELECTRONICS_PRODUCTS, EXTRA_SERVICES, SUPPLIERS } from '../constants';
 import { ChevronDownIcon, SearchCircleIcon, CubeIcon, PaperPlaneIcon, ShieldCheckIcon, SearchIcon } from '../components/Icons';
+import { productApi } from '../services/api';
+import { Product } from '../types';
 
 const iconMap = {
     SearchCircle: SearchCircleIcon,
@@ -179,11 +181,11 @@ const InquirySection: React.FC = () => (
     </section>
 )
 
-const RecommendedItems: React.FC = () => (
+const RecommendedItems: React.FC<{ products: Product[] }> = ({ products }) => (
     <section className="mt-5 p-4 lg:p-0">
         <h2 className="text-2xl font-semibold mb-4">Recommended items</h2>
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-            {RECOMMENDED_ITEMS.map(product => (
+            {products.slice(0, 10).map(product => (
                 <Link to={`/product/${product.id}`} key={product.id} className="bg-white p-2 lg:p-4 rounded-lg border hover:shadow-lg">
                     <img src={product.image} alt={product.name} className="w-full h-32 lg:h-40 object-cover rounded-md" />
                     <p className="font-semibold mt-3 text-sm lg:text-base">${product.price.toFixed(2)}</p>
@@ -247,6 +249,28 @@ const NewsletterSection: React.FC = () => (
 )
 
 const HomePage: React.FC = () => {
+    const [products, setProducts] = useState<Product[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            setLoading(true);
+            const fetchedProducts = await productApi.getAllProducts();
+            setProducts(fetchedProducts);
+            setLoading(false);
+        };
+
+        fetchProducts();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-lg text-gray-600">Loading products...</p>
+            </div>
+        );
+    }
+
     return (
         <>
             <MobileHomeHeader />
@@ -258,7 +282,7 @@ const HomePage: React.FC = () => {
                 <CategorySection title="Home and outdoor" image="https://picsum.photos/seed/homebg/400/300" products={HOME_OUTDOOR_PRODUCTS} />
                 <CategorySection title="Consumer electronics" image="https://picsum.photos/seed/gadgetbg/400/300" products={CONSUMER_ELECTRONICS_PRODUCTS} />
                 <InquirySection />
-                <RecommendedItems />
+                <RecommendedItems products={products} />
                 <ExtraServices />
                 <SuppliersSection />
                 <NewsletterSection />

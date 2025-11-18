@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MOCK_PRODUCTS, RECOMMENDED_ITEMS } from '../constants';
+import { MOCK_PRODUCTS } from '../constants';
 import { Product } from '../types';
 import { StarIcon, HeartIcon, ChevronLeftIcon, ChevronRightIcon } from '../components/Icons';
+import { productApi } from '../services/api';
 
 interface ProductDetailPageProps {
     addToCart: (product: Product, quantity: number) => void;
@@ -12,22 +13,52 @@ interface ProductDetailPageProps {
 
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ addToCart, isWishlisted, toggleWishlist }) => {
   const { id } = useParams<{ id: string }>();
-  const product = MOCK_PRODUCTS.find(p => p.id === parseInt(id || ''));
+  const [product, setProduct] = useState<Product | null>(null);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      setLoading(true);
+      if (!id) {
+        setLoading(false);
+        return;
+      }
+
+      const fetchedProducts = await productApi.getAllProducts();
+      setAllProducts(fetchedProducts);
+      
+      const foundProduct = fetchedProducts.find(p => p.id === parseInt(id));
+      setProduct(foundProduct || null);
+      setLoading(false);
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) {
+    return <div className="text-center py-20">Loading product...</div>;
+  }
 
   if (!product) {
     return <div className="text-center py-20">Product not found.</div>;
   }
 
-  const mainImage = product.images[currentImageIndex] || product.image;
+  const productImages = product.images && product.images.length > 0 ? product.images : [product.image];
+  const mainImage = productImages[currentImageIndex] || product.image;
 
   const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.images.length);
+    if (productImages.length > 0) {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % productImages.length);
+    }
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + product.images.length) % product.images.length);
+    if (productImages.length > 0) {
+      setCurrentImageIndex((prevIndex) => (prevIndex - 1 + productImages.length) % productImages.length);
+    }
   };
   
   const handleAddToCart = () => {
@@ -42,7 +73,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ addToCart, isWish
           <div className="lg:col-span-1">
             <img src={mainImage} alt={product.name} className="w-full rounded-lg border border-gray-200" />
             <div className="flex space-x-2 mt-4">
-              {product.images.map((img, index) => (
+              {productImages.map((img, index) => (
                 <img 
                     key={index} 
                     src={img} 
@@ -155,7 +186,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ addToCart, isWish
       <div className="bg-white p-5 rounded-lg shadow-sm mt-5">
         <h2 className="text-xl font-semibold mb-4">Similar products</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {RECOMMENDED_ITEMS.slice(0, 6).map(item => (
+          {allProducts.slice(0, 6).map(item => (
             <Link to={`/product/${item.id}`} key={item.id} className="border rounded-lg p-2">
                 <img src={item.image} alt={item.name} className="w-full h-24 sm:h-32 object-cover rounded-md" />
                 <p className="text-sm mt-2">{item.name}</p>

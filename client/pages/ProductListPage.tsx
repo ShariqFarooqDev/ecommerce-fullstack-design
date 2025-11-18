@@ -1,10 +1,11 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { MOCK_PRODUCTS } from '../constants';
 import ProductCard from '../components/ProductCard';
 import { ChevronDownIcon, GridIcon, ListIcon, StarIcon, HeartIcon } from '../components/Icons';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Product } from '../types';
+import { productApi } from '../services/api';
 
 interface ProductListPageProps {
   isWishlisted: (productId: number) => boolean;
@@ -33,19 +34,24 @@ const Sidebar: React.FC<{
     priceRange: { min: string, max: string }; onPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     applyPriceFilter: () => void;
     selectedRatings: number[]; onRatingChange: (rating: number) => void;
+    products: Product[];
 }> = ({
     selectedBrands, onBrandChange,
     selectedFeatures, onFeatureChange,
     priceRange, onPriceChange, applyPriceFilter,
-    selectedRatings, onRatingChange
+    selectedRatings, onRatingChange,
+    products
 }) => {
+    const dynamicBrands = [...new Set(products.map(p => p.brand))];
+    const dynamicFeatures = [...new Set(products.flatMap(p => p.features))];
+    
     return (
         <aside className="w-full lg:w-1/4 xl:w-1/5 pr-5 text-dark hidden lg:block">
             <div className="space-y-5">
                 <div>
                     <h3 className="font-semibold mb-2">Brands</h3>
                      <div className="space-y-2">
-                        {brands.map(brand => (
+                        {dynamicBrands.map(brand => (
                             <label key={brand} className="flex items-center space-x-2 cursor-pointer">
                                 <input type="checkbox" checked={selectedBrands.includes(brand)} onChange={() => onBrandChange(brand)} className="form-checkbox h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary" />
                                 <span>{brand}</span>
@@ -56,7 +62,7 @@ const Sidebar: React.FC<{
                  <div>
                     <h3 className="font-semibold mb-2">Features</h3>
                      <div className="space-y-2">
-                        {features.map(feature => (
+                        {dynamicFeatures.map(feature => (
                             <label key={feature} className="flex items-center space-x-2 cursor-pointer">
                                 <input type="checkbox" checked={selectedFeatures.includes(feature)} onChange={() => onFeatureChange(feature)} className="form-checkbox h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary" />
                                 <span>{feature}</span>
@@ -110,6 +116,8 @@ const ProductListItem: React.FC<{ product: Product; isWishlisted: boolean; toggl
 
 const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleWishlist }) => {
   const [searchParams] = useSearchParams();
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedBrands, setSelectedBrands] = useState<string[]>(['Apple', 'Huawei']);
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>(['8GB Ram']);
   const [priceRange, setPriceRange] = useState({ min: '', max: '' });
@@ -117,6 +125,17 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
   const [sortBy, setSortBy] = useState('Newest');
   const [view, setView] = useState('list');
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      const fetchedProducts = await productApi.getAllProducts();
+      setAllProducts(fetchedProducts);
+      setLoading(false);
+    };
+
+    fetchProducts();
+  }, []);
 
   const handleBrandChange = (brand: string) => {
     setSelectedBrands(prev => prev.includes(brand) ? prev.filter(b => b !== brand) : [...prev, brand]);
@@ -132,7 +151,7 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
   }
 
   const displayedProducts = useMemo(() => {
-    let products = [...MOCK_PRODUCTS];
+    let products = [...allProducts];
     const searchQuery = searchParams.get('search')?.toLowerCase();
 
     if (searchQuery) {
@@ -161,9 +180,17 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
     }
 
     return products;
-  }, [searchParams, selectedBrands, selectedFeatures, appliedPriceRange, selectedRatings, sortBy]);
+  }, [searchParams, allProducts, selectedBrands, selectedFeatures, appliedPriceRange, selectedRatings, sortBy]);
   
   const activeFilters = [...selectedBrands, ...selectedFeatures];
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-lg text-gray-600">Loading products...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-5">
@@ -198,6 +225,7 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
             selectedFeatures={selectedFeatures} onFeatureChange={handleFeatureChange}
             priceRange={priceRange} onPriceChange={handlePriceChange} applyPriceFilter={() => setAppliedPriceRange(priceRange)}
             selectedRatings={selectedRatings} onRatingChange={handleRatingChange}
+            products={allProducts}
         />
         <main className="w-full lg:w-3/4 xl:w-4/5">
           <div className="bg-white p-3 rounded-md shadow-sm hidden md:flex flex-col md:flex-row justify-between items-center mb-4">
@@ -219,11 +247,11 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
             </div>
           </div>
 
-          <div className={view === 'grid' ? "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4" : "flex flex-col gap-4"}>
+          <div className={view === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6" : "flex flex-col gap-4"}>
             {displayedProducts.map(product => (
               view === 'grid' ?
-              <ProductCard key={product.id} product={product} isWishlisted={isWishlisted} toggleWishlist={toggleWishlist} /> :
-              <ProductListItem key={product.id} product={product} isWishlisted={isWishlisted(product.id)} toggleWishlist={() => toggleWishlist(product)} />
+              <ProductCard key={product.id} product={product} isWishlisted={isWishlisted} toggleWishlist={toggleWishlist} view="grid" className="rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col h-full" imageClassName="w-full h-40 object-cover" /> :
+              <ProductCard key={product.id} product={product} isWishlisted={isWishlisted} toggleWishlist={toggleWishlist} view="list" />
             ))}
           </div>
 
