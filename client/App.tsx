@@ -8,7 +8,6 @@ import ProductListPage from './pages/ProductListPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
 import { CartItem, Product } from './types';
-import { MOCK_PRODUCTS } from './constants';
 import { UserIcon, HeartIcon, XIcon } from './components/Icons';
 
 const MobileMenu: React.FC<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => void; }> = ({ isOpen, setIsOpen }) => (
@@ -71,7 +70,7 @@ const MobileMenu: React.FC<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => vo
 
 const App: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [wishlist, setWishlist] = useState<Product[]>([MOCK_PRODUCTS[0], MOCK_PRODUCTS[4]]);
+  const [wishlist, setWishlist] = useState<Product[]>([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 

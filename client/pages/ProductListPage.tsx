@@ -1,6 +1,5 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { MOCK_PRODUCTS } from '../constants';
 import ProductCard from '../components/ProductCard';
 import { ChevronDownIcon, GridIcon, ListIcon, StarIcon, HeartIcon } from '../components/Icons';
 import { useSearchParams, Link } from 'react-router-dom';
@@ -24,9 +23,6 @@ const RatingFilter: React.FC<{ selected: number[], onChange: (rating: number) =>
         ))}
     </div>
 );
-
-const brands = [...new Set(MOCK_PRODUCTS.map(p => p.brand))];
-const features = [...new Set(MOCK_PRODUCTS.flatMap(p => p.features))];
 
 const Sidebar: React.FC<{
     selectedBrands: string[]; onBrandChange: (brand: string) => void;

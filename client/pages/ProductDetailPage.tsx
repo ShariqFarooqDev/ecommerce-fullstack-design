@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MOCK_PRODUCTS } from '../constants';
 import { Product } from '../types';
 import { StarIcon, HeartIcon, ChevronLeftIcon, ChevronRightIcon } from '../components/Icons';
 import { productApi } from '../services/api';
