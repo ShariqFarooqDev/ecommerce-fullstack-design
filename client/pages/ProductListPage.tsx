@@ -4,7 +4,7 @@ import ProductCard from '../components/ProductCard';
 import { ChevronDownIcon, GridIcon, ListIcon, StarIcon, HeartIcon } from '../components/Icons';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Product } from '../types';
-import { productApi } from '../services/api';
+import { getAllProducts } from '../services/api';
 
 interface ProductListPageProps {
   isWishlisted: (productId: number) => boolean;
