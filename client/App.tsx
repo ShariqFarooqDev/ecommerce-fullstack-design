@@ -17,7 +17,7 @@ const MobileMenu: React.FC<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => vo
       <div className="p-4">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center space-x-2">
-            <UserIcon className="w-8 h-8 text-gray-500 bg-gray-200 rounded-full p-1"/>
+            <UserIcon className="w-8 h-8 text-gray-500 bg-gray-200 rounded-full p-1" />
             <span className="font-semibold">Sign in | Register</span>
           </div>
           <button onClick={() => setIsOpen(false)}>
@@ -30,7 +30,7 @@ const MobileMenu: React.FC<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => vo
             <span>Home</span>
           </Link>
           <Link to="/products" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
-             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
             <span>Categories</span>
           </Link>
           <Link to="#" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
@@ -44,35 +44,62 @@ const MobileMenu: React.FC<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => vo
         </nav>
         <div className="border-t my-4"></div>
         <nav className="space-y-4 text-gray-800">
-            <a href="#" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h8a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.707 4.293l1.414-1.414a1 1 0 011.414 0l1.414 1.414M7.707 4.293V6m3.535 0V4.293m3.535 0V6M4.293 7.707l1.414 1.414M18.293 9.121l1.414-1.414M4.293 16.293l1.414-1.414M18.293 14.879l1.414 1.414" /></svg>
-                <span>English | USD</span>
-            </a>
-            <a href="#" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                <span>Contact us</span>
-            </a>
-             <a href="#" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                <span>About</span>
-            </a>
+          <a href="#" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h8a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.707 4.293l1.414-1.414a1 1 0 011.414 0l1.414 1.414M7.707 4.293V6m3.535 0V4.293m3.535 0V6M4.293 7.707l1.414 1.414M18.293 9.121l1.414-1.414M4.293 16.293l1.414-1.414M18.293 14.879l1.414 1.414" /></svg>
+            <span>English | USD</span>
+          </a>
+          <a href="#" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+            <span>Contact us</span>
+          </a>
+          <a href="#" className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>About</span>
+          </a>
         </nav>
-         <div className="absolute bottom-4 left-4 right-4 space-y-2 text-sm text-gray-600">
-             <a href="#" className="block">User agreement</a>
-             <a href="#" className="block">Partnership</a>
-             <a href="#" className="block">Privacy policy</a>
-         </div>
+        <div className="absolute bottom-4 left-4 right-4 space-y-2 text-sm text-gray-600">
+          <a href="#" className="block">User agreement</a>
+          <a href="#" className="block">Partnership</a>
+          <a href="#" className="block">Privacy policy</a>
+        </div>
       </div>
     </div>
   </>
 );
 
 
-const App: React.FC = () => {
+import { AuthProvider, useAuth } from './context/AuthContext';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+
+import AdminRoute from './components/AdminRoute';
+import AdminPage from './pages/AdminPage';
+
+const AppContent: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<Product[]>([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { user } = useAuth();
+
+  // Load cart when user logs in
+  useEffect(() => {
+    if (user) {
+      const storedCart = localStorage.getItem(`cart_${user.name}`);
+      if (storedCart) {
+        setCartItems(JSON.parse(storedCart));
+      }
+    } else {
+      setCartItems([]); // Clear cart on logout or if guest
+    }
+  }, [user]);
+
+  // Save cart when items change (only if logged in)
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem(`cart_${user.name}`, JSON.stringify(cartItems));
+    }
+  }, [cartItems, user]);
 
   useEffect(() => {
     // Close mobile menu on route change
@@ -99,7 +126,7 @@ const App: React.FC = () => {
         .filter(item => item.quantity > 0)
     );
   };
-  
+
   const removeFromCart = (productId: number) => {
     setCartItems(prevItems => prevItems.filter(item => item.product.id !== productId));
   };
@@ -128,31 +155,46 @@ const App: React.FC = () => {
     <>
       <MobileMenu isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} />
       <div className="bg-gray-100 min-h-screen flex flex-col font-sans overflow-x-hidden">
-        <Header 
-          cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)} 
+        <Header
+          cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
           toggleMobileMenu={() => setIsMobileMenuOpen(true)}
         />
         <main className="flex-grow bg-white lg:bg-gray-100">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="/products" element={<ProductListPage isWishlisted={isWishlisted} toggleWishlist={toggleWishlist} />} />
             <Route path="/product/:id" element={<ProductDetailPage addToCart={addToCart} isWishlisted={isWishlisted} toggleWishlist={toggleWishlist} />} />
             <Route path="/cart" element={
-              <CartPage 
-                cartItems={cartItems} 
-                updateQuantity={updateQuantity} 
-                removeFromCart={removeFromCart} 
+              <CartPage
+                cartItems={cartItems}
+                updateQuantity={updateQuantity}
+                removeFromCart={removeFromCart}
                 wishlist={wishlist}
                 addToCart={addToCart}
                 toggleWishlist={toggleWishlist}
                 moveFromCartToWishlist={moveFromCartToWishlist}
-              />} 
+              />}
             />
+
+            {/* Admin Routes */}
+            <Route element={<AdminRoute />}>
+              <Route path="/admin" element={<AdminPage />} />
+            </Route>
           </Routes>
         </main>
         <Footer />
       </div>
     </>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 

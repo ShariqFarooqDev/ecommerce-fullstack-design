@@ -40,22 +40,22 @@ export const CONSUMER_ELECTRONICS_PRODUCTS = [
   { name: 'Electric kettle', price: 240, img: 'https://picsum.photos/seed/ce_kettle/80/80' },
 ];
 
-export const DEALS_ITEMS = [
-    { name: 'Source from Industry Hubs', icon: 'SearchCircle', img: 'https://picsum.photos/seed/service1/200/120' },
-    { name: 'Customize Your Products', icon: 'Cube', img: 'https://picsum.photos/seed/service2/200/120' },
-    { name: 'Fast, reliable shipping by ocean or air', icon: 'PaperPlane', img: 'https://picsum.photos/seed/service3/200/120' },
-    { name: 'Product monitoring and inspection', icon: 'ShieldCheck', img: 'https://picsum.photos/seed/service4/200/120' },
-]
+export const EXTRA_SERVICES = [
+  { name: 'Source from Industry Hubs', icon: 'SearchCircle', img: 'https://picsum.photos/seed/service1/200/120' },
+  { name: 'Customize Your Products', icon: 'Cube', img: 'https://picsum.photos/seed/service2/200/120' },
+  { name: 'Fast, reliable shipping by ocean or air', icon: 'PaperPlane', img: 'https://picsum.photos/seed/service3/200/120' },
+  { name: 'Product monitoring and inspection', icon: 'ShieldCheck', img: 'https://picsum.photos/seed/service4/200/120' },
+];
 
 export const SUPPLIERS = [
-    { name: 'Arabic Emirates', domain: 'shopname.ae', flag: '🇦🇪', code: 'ae' },
-    { name: 'Australia', domain: 'shopname.com.au', flag: '🇦🇺', code: 'au' },
-    { name: 'United States', domain: 'shopname.com', flag: '🇺🇸', code: 'us' },
-    { name: 'Russia', domain: 'shopname.ru', flag: '🇷🇺', code: 'ru' },
-    { name: 'Italy', domain: 'shopname.it', flag: '🇮🇹', code: 'it' },
-    { name: 'Denmark', domain: 'denmark.com.dk', flag: '🇩🇰', code: 'dk' },
-    { name: 'France', domain: 'shopname.com.fr', flag: '🇫🇷', code: 'fr' },
-    { name: 'Arabic Emirates', domain: 'shopname.ae', flag: '🇦🇪', code: 'ae' },
-    { name: 'China', domain: 'shopname.cn', flag: '🇨🇳', code: 'cn' },
-    { name: 'Great Britain', domain: 'shopname.co.uk', flag: '🇬🇧', code: 'gb' },
+  { name: 'Arabic Emirates', domain: 'shopname.ae', flag: '🇦🇪', code: 'ae' },
+  { name: 'Australia', domain: 'shopname.com.au', flag: '🇦🇺', code: 'au' },
+  { name: 'United States', domain: 'shopname.com', flag: '🇺🇸', code: 'us' },
+  { name: 'Russia', domain: 'shopname.ru', flag: '🇷🇺', code: 'ru' },
+  { name: 'Italy', domain: 'shopname.it', flag: '🇮🇹', code: 'it' },
+  { name: 'Denmark', domain: 'denmark.com.dk', flag: '🇩🇰', code: 'dk' },
+  { name: 'France', domain: 'shopname.com.fr', flag: '🇫🇷', code: 'fr' },
+  { name: 'Arabic Emirates', domain: 'shopname.ae', flag: '🇦🇪', code: 'ae' },
+  { name: 'China', domain: 'shopname.cn', flag: '🇨🇳', code: 'cn' },
+  { name: 'Great Britain', domain: 'shopname.co.uk', flag: '🇬🇧', code: 'gb' },
 ];
