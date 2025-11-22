@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { HOME_CATEGORIES, DEALS_ITEMS, HOME_OUTDOOR_PRODUCTS, CONSUMER_ELECTRONICS_PRODUCTS, EXTRA_SERVICES, SUPPLIERS } from '../constants';
 import { ChevronDownIcon, SearchCircleIcon, CubeIcon, PaperPlaneIcon, ShieldCheckIcon, SearchIcon } from '../components/Icons';
-import { productApi } from '../services/api';
+import { getAllProducts } from '../services/api';
 import { Product } from '../types';
 
 const iconMap = {
@@ -255,7 +255,7 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true);
-            const fetchedProducts = await productApi.getAllProducts();
+            const fetchedProducts = await getAllProducts();
             setProducts(fetchedProducts);
             setLoading(false);
         };
