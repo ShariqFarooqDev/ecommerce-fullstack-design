@@ -25,6 +25,7 @@ const RatingFilter: React.FC<{ selected: number[], onChange: (rating: number) =>
 );
 
 const Sidebar: React.FC<{
+  selectedCategories: string[]; onCategoryChange: (category: string) => void;
   selectedBrands: string[]; onBrandChange: (brand: string) => void;
   selectedFeatures: string[]; onFeatureChange: (feature: string) => void;
   priceRange: { min: string, max: string }; onPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -32,18 +33,31 @@ const Sidebar: React.FC<{
   selectedRatings: number[]; onRatingChange: (rating: number) => void;
   products: Product[];
 }> = ({
+  selectedCategories, onCategoryChange,
   selectedBrands, onBrandChange,
   selectedFeatures, onFeatureChange,
   priceRange, onPriceChange, applyPriceFilter,
   selectedRatings, onRatingChange,
   products
 }) => {
+    const dynamicCategories = [...new Set(products.map(p => p.category))];
     const dynamicBrands = [...new Set(products.map(p => p.brand))];
     const dynamicFeatures = [...new Set(products.flatMap(p => p.features))];
 
     return (
       <aside className="w-full lg:w-1/4 xl:w-1/5 pr-5 text-dark hidden lg:block">
         <div className="space-y-5">
+          <div>
+            <h3 className="font-semibold mb-2">Categories</h3>
+            <div className="space-y-2">
+              {dynamicCategories.map(category => (
+                <label key={category} className="flex items-center space-x-2 cursor-pointer">
+                  <input type="checkbox" checked={selectedCategories.includes(category)} onChange={() => onCategoryChange(category)} className="form-checkbox h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary" />
+                  <span className="capitalize">{category}</span>
+                </label>
+              ))}
+            </div>
+          </div>
           <div>
             <h3 className="font-semibold mb-2">Brands</h3>
             <div className="space-y-2">
@@ -114,8 +128,9 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
   const [searchParams] = useSearchParams();
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedBrands, setSelectedBrands] = useState<string[]>(['Apple', 'Huawei']);
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>(['8GB Ram']);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState({ min: '', max: '' });
   const [appliedPriceRange, setAppliedPriceRange] = useState({ min: '', max: '' });
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
@@ -133,6 +148,9 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
     fetchProducts();
   }, []);
 
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategories(prev => prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]);
+  };
   const handleBrandChange = (brand: string) => {
     setSelectedBrands(prev => prev.includes(brand) ? prev.filter(b => b !== brand) : [...prev, brand]);
   };
@@ -152,6 +170,9 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
 
     if (searchQuery) {
       products = products.filter(p => p.name.toLowerCase().includes(searchQuery) || p.description.toLowerCase().includes(searchQuery));
+    }
+    if (selectedCategories.length) {
+      products = products.filter(p => selectedCategories.includes(p.category));
     }
     if (selectedBrands.length) {
       products = products.filter(p => selectedBrands.includes(p.brand));
@@ -178,7 +199,7 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
     return products;
   }, [searchParams, allProducts, selectedBrands, selectedFeatures, appliedPriceRange, selectedRatings, sortBy]);
 
-  const activeFilters = [...selectedBrands, ...selectedFeatures];
+  const activeFilters = [...selectedCategories, ...selectedBrands, ...selectedFeatures];
 
   if (loading) {
     return (
@@ -200,6 +221,12 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
           </div>
         </div>
         <div className="flex flex-wrap gap-2 mb-4">
+          {selectedCategories.map(category => (
+            <div key={category} className="bg-gray-200 text-gray-700 text-sm px-2 py-1 rounded-md flex items-center capitalize">
+              {category}
+              <button onClick={() => handleCategoryChange(category)} className="ml-2 text-gray-500">x</button>
+            </div>
+          ))}
           {selectedBrands.map(brand => (
             <div key={brand} className="bg-gray-200 text-gray-700 text-sm px-2 py-1 rounded-md flex items-center">
               {brand}
@@ -217,6 +244,7 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
 
       <div className="flex flex-col lg:flex-row">
         <Sidebar
+          selectedCategories={selectedCategories} onCategoryChange={handleCategoryChange}
           selectedBrands={selectedBrands} onBrandChange={handleBrandChange}
           selectedFeatures={selectedFeatures} onFeatureChange={handleFeatureChange}
           priceRange={priceRange} onPriceChange={handlePriceChange} applyPriceFilter={() => setAppliedPriceRange(priceRange)}

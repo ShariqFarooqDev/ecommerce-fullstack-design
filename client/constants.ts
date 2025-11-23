@@ -12,32 +12,32 @@ export const HOME_CATEGORIES = [
 
 export const DEALS_ITEMS = [
   { name: 'Smart watches', img: '/images/smartwatch.png', discount: -25 },
-  { name: 'Laptops', img: '/images/laptopdeal.png', discount: -15 },
+  { name: 'Laptops', img: '/images/laptop.png', discount: -15 },
   { name: 'GoPro cameras', img: '/images/gopro.png', discount: -40 },
-  { name: 'Headphones', img: '/images/headset.png', discount: -25 },
-  { name: 'Canon cameras', img: '/images/canonCamera.png', discount: -25 },
+  { name: 'Headphones', img: '/images/gaming-headset.png', discount: -25 },
+  { name: 'Canon cameras', img: '/images/canon-camera.png', discount: -25 },
 ];
 
 export const HOME_OUTDOOR_PRODUCTS = [
-  { name: 'Soft chairs', price: 19, img: '/images/sofa.png' },
-  { name: 'Sofa & chair', price: 19, img: 'https://picsum.photos/seed/sofa/80/80' },
-  { name: 'Kitchen dishes', price: 19, img: 'https://picsum.photos/seed/dishes/80/80' },
-  { name: 'Smart watches', price: 19, img: 'https://picsum.photos/seed/watch2/80/80' },
-  { name: 'Kitchen mixer', price: 100, img: 'https://picsum.photos/seed/mixer/80/80' },
-  { name: 'Blenders', price: 39, img: 'https://picsum.photos/seed/blender/80/80' },
-  { name: 'Home appliance', price: 19, img: 'https://picsum.photos/seed/appliance/80/80' },
-  { name: 'Coffee maker', price: 10, img: 'https://picsum.photos/seed/coffee/80/80' },
+  { name: 'Soft chairs', price: 19, img: '/images/leather_sofa.png' },
+  { name: 'Sofa & chair', price: 19, img: '/images/leather_sofa.png' },
+  { name: 'Kitchen dishes', price: 19, img: '/images/pot.png' },
+  { name: 'Smart watches', price: 19, img: '/images/smartwatch.png' },
+  { name: 'Kitchen mixer', price: 100, img: '/images/kitchen_mixer.png' },
+  { name: 'Blenders', price: 39, img: '/images/electric_blender.png' },
+  { name: 'Home appliance', price: 19, img: '/images/coffee_maker.png' },
+  { name: 'Coffee maker', price: 10, img: '/images/coffee_maker.png' },
 ];
 
 export const CONSUMER_ELECTRONICS_PRODUCTS = [
-  { name: 'Smart watches', price: 19, img: 'https://picsum.photos/seed/ce_watch/80/80' },
-  { name: 'Cameras', price: 89, img: 'https://picsum.photos/seed/ce_camera/80/80' },
-  { name: 'Headphones', price: 10, img: 'https://picsum.photos/seed/ce_headphones/80/80' },
-  { name: 'Smart watches', price: 90, img: 'https://picsum.photos/seed/ce_watch2/80/80' },
-  { name: 'Gaming set', price: 35, img: 'https://picsum.photos/seed/ce_gaming/80/80' },
-  { name: 'Laptops & PC', price: 340, img: 'https://picsum.photos/seed/ce_laptop/80/80' },
-  { name: 'Smartphones', price: 19, img: 'https://picsum.photos/seed/ce_phone/80/80' },
-  { name: 'Electric kettle', price: 240, img: 'https://picsum.photos/seed/ce_kettle/80/80' },
+  { name: 'Smart watches', price: 19, img: '/images/smartwatch.png' },
+  { name: 'Cameras', price: 89, img: '/images/canon-camera.png' },
+  { name: 'Headphones', price: 10, img: '/images/gaming-headset.png' },
+  { name: 'Smart watches', price: 90, img: '/images/smartwatch.png' },
+  { name: 'Gaming set', price: 35, img: '/images/gaming-headset.png' },
+  { name: 'Laptops & PC', price: 340, img: '/images/laptop.png' },
+  { name: 'Smartphones', price: 19, img: '/images/phone1.png' },
+  { name: 'Electric kettle', price: 240, img: '/images/lamp.png' },
 ];
 
 export const EXTRA_SERVICES = [
