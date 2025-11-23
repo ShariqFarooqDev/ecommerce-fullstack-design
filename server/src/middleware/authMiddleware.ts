@@ -17,8 +17,17 @@ export const authenticateUser = async (
 
     const token = authHeader.split(" ")[1];
 
+    if (!token) {
+        return res.status(401).json({ msg: "Authentication invalid" });
+    }
+
     try {
-        const payload = jwt.verify(token, process.env.JWT_SECRET || "jwtSecret") as {
+        const secret = process.env.JWT_SECRET;
+        if (!secret) {
+            throw new Error("JWT_SECRET is not defined");
+        }
+
+        const payload = jwt.verify(token, secret) as unknown as {
             userId: string;
             name: string;
             role: string;
