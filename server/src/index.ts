@@ -14,9 +14,16 @@ app.use(cors());
 app.use(express.json());
 
 import authRouter from "./routes/authRoutes";
+import uploadRouter from "./routes/uploadRoutes";
+import { authenticateUser } from "./middleware/authMiddleware";
+import path from "path";
+
+// Serve static files
+app.use(express.static(path.join(__dirname, "../public")));
 
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/upload", authenticateUser, uploadRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");

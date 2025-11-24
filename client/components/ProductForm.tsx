@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from '../types';
+import { uploadImage } from '../services/api';
 
 interface ProductFormProps {
     product?: Product | null;
@@ -23,6 +24,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onCancel }
     });
     const [featureInput, setFeatureInput] = useState('');
     const [loading, setLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -68,6 +70,22 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onCancel }
             ...prev,
             features: prev.features.filter((_, i) => i !== index)
         }));
+    };
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setUploading(true);
+        setError('');
+        try {
+            const imagePath = await uploadImage(file);
+            setFormData(prev => ({ ...prev, image: imagePath }));
+        } catch (err: any) {
+            setError(err.message || 'Failed to upload image');
+        } finally {
+            setUploading(false);
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -245,17 +263,37 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onCancel }
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Image URL *
+                                Product Image *
                             </label>
-                            <input
-                                type="text"
-                                name="image"
-                                value={formData.image}
-                                onChange={handleChange}
-                                placeholder="/images/product.png"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                required
-                            />
+                            <div className="flex gap-2 items-center">
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageUpload}
+                                    className="block w-full text-sm text-gray-500
+                                        file:mr-4 file:py-2 file:px-4
+                                        file:rounded-md file:border-0
+                                        file:text-sm file:font-semibold
+                                        file:bg-blue-50 file:text-blue-700
+                                        hover:file:bg-blue-100"
+                                    disabled={uploading}
+                                />
+                                {uploading && <span className="text-sm text-gray-500">Uploading...</span>}
+                            </div>
+                            {formData.image && (
+                                <div className="mt-2">
+                                    <img
+                                        src={formData.image.startsWith('http') ? formData.image : `http://localhost:3000${formData.image}`}
+                                        alt="Preview"
+                                        className="h-20 w-20 object-cover rounded-md border"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        name="image"
+                                        value={formData.image}
+                                    />
+                                </div>
+                            )}
                         </div>
 
                         <div>
@@ -332,8 +370,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onCancel }
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 

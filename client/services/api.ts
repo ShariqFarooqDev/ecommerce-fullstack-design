@@ -78,3 +78,25 @@ export const updateProduct = async (id: number, productData: Partial<Product>): 
   const data = await response.json();
   return data.product;
 };
+
+export const uploadImage = async (file: File): Promise<string> => {
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const formData = new FormData();
+  formData.append('image', file);
+
+  const response = await fetch(`${API_BASE_URL}/upload`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${user.token}`,
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.msg || 'Failed to upload image');
+  }
+
+  const data = await response.json();
+  return data.image;
+};

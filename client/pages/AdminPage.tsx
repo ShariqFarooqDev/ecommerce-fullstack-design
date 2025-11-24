@@ -9,10 +9,16 @@ const AdminPage: React.FC = () => {
     const [error, setError] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetchProducts();
     }, []);
+
+    const filteredProducts = products.filter(product =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const fetchProducts = async () => {
         try {
@@ -75,12 +81,21 @@ const AdminPage: React.FC = () => {
         <div className="container mx-auto px-4 py-8">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-                <button
-                    onClick={handleCreateClick}
-                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-                >
-                    Create New Product
-                </button>
+                <div className="flex gap-4">
+                    <input
+                        type="text"
+                        placeholder="Search products..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <button
+                        onClick={handleCreateClick}
+                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                    >
+                        Create New Product
+                    </button>
+                </div>
             </div>
 
             <div className="bg-white shadow-md rounded-lg overflow-hidden">
@@ -95,7 +110,7 @@ const AdminPage: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {products.map((product) => (
+                        {filteredProducts.map((product) => (
                             <tr key={product.id}>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">
