@@ -2,17 +2,24 @@ import { Product } from '../types';
 
 const API_BASE_URL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:3000/api/v1';
 
-export const getAllProducts = async (): Promise<Product[]> => {
+export const getAllProducts = async (params?: { page?: number; limit?: number; search?: string }): Promise<{ products: Product[]; totalPages: number; currentPage: number; totalProducts: number }> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/products`);
+    const { page = 1, limit = 1000, search = '' } = params || {};
+    const queryParams = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+      search,
+    });
+
+    const response = await fetch(`${API_BASE_URL}/products?${queryParams}`);
     if (!response.ok) {
       throw new Error('Failed to fetch products');
     }
     const data = await response.json();
-    return data.products || [];
+    return data;
   } catch (error) {
     console.error('Error fetching products:', error);
-    return [];
+    return { products: [], totalPages: 0, currentPage: 1, totalProducts: 0 };
   }
 };
 

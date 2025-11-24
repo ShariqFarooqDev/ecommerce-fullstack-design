@@ -3,8 +3,29 @@ import Product from "../models/product";
 
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find({});
-    res.status(200).json({ products });
+    const { page = 1, limit = 10, search = '' } = req.query;
+    const pageNum = Number(page);
+    const limitNum = Number(limit);
+    const skip = (pageNum - 1) * limitNum;
+
+    const query: any = {};
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { category: { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    const products = await Product.find(query).skip(skip).limit(limitNum);
+    const totalProducts = await Product.countDocuments(query);
+    const totalPages = Math.ceil(totalProducts / limitNum);
+
+    res.status(200).json({
+      products,
+      totalPages,
+      currentPage: pageNum,
+      totalProducts
+    });
   } catch (error) {
     res.status(500).json({ msg: error });
   }

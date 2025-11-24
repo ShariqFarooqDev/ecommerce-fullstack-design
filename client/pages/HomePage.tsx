@@ -255,8 +255,8 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true);
-            const fetchedProducts = await getAllProducts();
-            setProducts(fetchedProducts);
+            const { products } = await getAllProducts();
+            setProducts(products);
             setLoading(false);
         };
 

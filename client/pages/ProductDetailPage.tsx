@@ -26,10 +26,10 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ addToCart, isWish
         return;
       }
 
-      const fetchedProducts = await getAllProducts();
-      setAllProducts(fetchedProducts);
+      const { products } = await getAllProducts();
+      setAllProducts(products);
 
-      const foundProduct = fetchedProducts.find(p => p.id === parseInt(id));
+      const foundProduct = products.find(p => p.id === parseInt(id));
       setProduct(foundProduct || null);
       setLoading(false);
     };

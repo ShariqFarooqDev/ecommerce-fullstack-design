@@ -140,8 +140,8 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
-      const fetchedProducts = await getAllProducts();
-      setAllProducts(fetchedProducts);
+      const { products } = await getAllProducts();
+      setAllProducts(products);
       setLoading(false);
     };
 
