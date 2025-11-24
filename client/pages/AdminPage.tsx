@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Product } from '../types';
-import { getAllProducts, deleteProduct } from '../services/api';
+import { getAllProducts, deleteProduct, createProduct, updateProduct } from '../services/api';
+import ProductForm from '../components/ProductForm';
 
 const AdminPage: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [showForm, setShowForm] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
     useEffect(() => {
         fetchProducts();
@@ -33,6 +36,38 @@ const AdminPage: React.FC = () => {
         }
     };
 
+    const handleCreateClick = () => {
+        setSelectedProduct(null);
+        setShowForm(true);
+    };
+
+    const handleEditClick = (product: Product) => {
+        setSelectedProduct(product);
+        setShowForm(true);
+    };
+
+    const handleFormSubmit = async (productData: Partial<Product>) => {
+        try {
+            if (selectedProduct) {
+                // Update existing product
+                await updateProduct(selectedProduct.id, productData);
+            } else {
+                // Create new product
+                await createProduct(productData);
+            }
+            setShowForm(false);
+            setSelectedProduct(null);
+            await fetchProducts(); // Refresh the list
+        } catch (err: any) {
+            throw err; // Let the form handle the error
+        }
+    };
+
+    const handleFormCancel = () => {
+        setShowForm(false);
+        setSelectedProduct(null);
+    };
+
     if (loading) return <div className="p-8 text-center">Loading...</div>;
     if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
 
@@ -40,7 +75,10 @@ const AdminPage: React.FC = () => {
         <div className="container mx-auto px-4 py-8">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-                <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                <button
+                    onClick={handleCreateClick}
+                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                >
                     Create New Product
                 </button>
             </div>
@@ -73,14 +111,32 @@ const AdminPage: React.FC = () => {
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.price}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.category}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <button className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</button>
-                                    <button onClick={() => handleDelete(product.id)} className="text-red-600 hover:text-red-900">Delete</button>
+                                    <button
+                                        onClick={() => handleEditClick(product)}
+                                        className="text-indigo-600 hover:text-indigo-900 mr-4"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(product.id)}
+                                        className="text-red-600 hover:text-red-900"
+                                    >
+                                        Delete
+                                    </button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+
+            {showForm && (
+                <ProductForm
+                    product={selectedProduct}
+                    onSubmit={handleFormSubmit}
+                    onCancel={handleFormCancel}
+                />
+            )}
         </div>
     );
 };

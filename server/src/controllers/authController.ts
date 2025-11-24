@@ -5,7 +5,7 @@ export const register = async (req: Request, res: Response) => {
     try {
         const user = await User.create({ ...req.body });
         const token = user.createJWT();
-        res.status(201).json({ user: { name: user.name }, token });
+        res.status(201).json({ user: { name: user.name, role: user.role }, token });
     } catch (error) {
         res.status(500).json({ msg: error });
     }
@@ -30,7 +30,7 @@ export const login = async (req: Request, res: Response) => {
         }
 
         const token = user.createJWT();
-        res.status(200).json({ user: { name: user.name }, token });
+        res.status(200).json({ user: { name: user.name, role: user.role }, token });
     } catch (error) {
         res.status(500).json({ msg: error });
     }

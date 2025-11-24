@@ -25,10 +25,15 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const product = await Product.create(req.body);
+    // Find the highest current ID
+    const lastProduct = await Product.findOne().sort({ id: -1 });
+    const newId = lastProduct && lastProduct.id ? lastProduct.id + 1 : 1;
+
+    const product = await Product.create({ ...req.body, id: newId });
     res.status(201).json({ product });
   } catch (error) {
-    res.status(500).json({ msg: error });
+    console.error("Create product error:", error);
+    res.status(500).json({ msg: "Failed to create product", error });
   }
 };
 

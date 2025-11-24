@@ -16,12 +16,14 @@ const DesktopHeader: React.FC<{ cartItemCount: number }> = ({ cartItemCount }) =
   const { user, logout } = useAuth();
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [shipDropdownOpen, setShipDropdownOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   const [selectedLang, setSelectedLang] = useState({ lang: 'English', currency: 'USD' });
   const [selectedShip, setSelectedShip] = useState({ name: 'Germany', code: 'de' });
 
   const langRef = useRef<HTMLDivElement>(null);
   const shipRef = useRef<HTMLDivElement>(null);
+  const userRef = useRef<HTMLDivElement>(null);
 
   const languages = [
     { lang: 'English', currency: 'USD' },
@@ -47,12 +49,15 @@ const DesktopHeader: React.FC<{ cartItemCount: number }> = ({ cartItemCount }) =
       if (shipRef.current && !shipRef.current.contains(event.target as Node)) {
         setShipDropdownOpen(false);
       }
+      if (userRef.current && !userRef.current.contains(event.target as Node)) {
+        setUserDropdownOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [langRef, shipRef]);
+  }, [langRef, shipRef, userRef]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,15 +107,19 @@ const DesktopHeader: React.FC<{ cartItemCount: number }> = ({ cartItemCount }) =
 
             <div className="flex items-center space-x-2 sm:space-x-4">
               {user ? (
-                <div className="flex flex-col items-center cursor-pointer group relative">
-                  <UserIcon className="w-7 h-7 mx-auto text-primary" />
-                  <span className="text-xs font-medium">{user.name}</span>
-                  <div className="absolute top-full right-0 mt-2 w-32 bg-white border rounded-md shadow-lg hidden group-hover:block z-10">
-                    {user.role === 'admin' && (
-                      <Link to="/admin" className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Admin Panel</Link>
-                    )}
-                    <button onClick={logout} className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Logout</button>
+                <div ref={userRef} className="relative flex flex-col items-center cursor-pointer">
+                  <div onClick={() => setUserDropdownOpen(!userDropdownOpen)}>
+                    <UserIcon className="w-7 h-7 mx-auto text-primary" />
+                    <span className="text-xs font-medium">{user.name}</span>
                   </div>
+                  {userDropdownOpen && (
+                    <div className="absolute top-full right-0 mt-2 w-32 bg-white border rounded-md shadow-lg z-10">
+                      {user.role === 'admin' && (
+                        <Link to="/admin" onClick={() => setUserDropdownOpen(false)} className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Admin Panel</Link>
+                      )}
+                      <button onClick={() => { logout(); setUserDropdownOpen(false); }} className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Logout</button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <Link to="/login" className="text-center text-gray-600 hover:text-primary">

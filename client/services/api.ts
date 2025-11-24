@@ -31,10 +31,50 @@ export const getProductById = async (id: string | number): Promise<Product | nul
 };
 
 export const deleteProduct = async (id: number): Promise<void> => {
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
   const response = await fetch(`${API_BASE_URL}/products/${id}`, {
     method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${user.token}`,
+    },
   });
   if (!response.ok) {
     throw new Error('Failed to delete product');
   }
+};
+
+export const createProduct = async (productData: Partial<Product>): Promise<Product> => {
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const response = await fetch(`${API_BASE_URL}/products`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${user.token}`,
+    },
+    body: JSON.stringify(productData),
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.msg || 'Failed to create product');
+  }
+  const data = await response.json();
+  return data.product;
+};
+
+export const updateProduct = async (id: number, productData: Partial<Product>): Promise<Product> => {
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const response = await fetch(`${API_BASE_URL}/products/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${user.token}`,
+    },
+    body: JSON.stringify(productData),
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.msg || 'Failed to update product');
+  }
+  const data = await response.json();
+  return data.product;
 };

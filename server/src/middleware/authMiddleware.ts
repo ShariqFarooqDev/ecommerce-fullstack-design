@@ -38,3 +38,14 @@ export const authenticateUser = async (
         return res.status(401).json({ msg: "Authentication invalid" });
     }
 };
+
+export const authorizeAdmin = (
+    req: AuthRequest,
+    res: Response,
+    next: NextFunction
+) => {
+    if (!req.user || req.user.role !== "admin") {
+        return res.status(403).json({ msg: "Access denied. Admin privileges required." });
+    }
+    next();
+};
