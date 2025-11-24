@@ -19,32 +19,32 @@ export const DEALS_ITEMS = [
 ];
 
 export const HOME_OUTDOOR_PRODUCTS = [
-  { name: 'Soft chairs', price: 19, img: '/images/leather_sofa.png' },
+  { name: 'Soft chairs', price: 19, img: '/images/sofa.png' },
   { name: 'Sofa & chair', price: 19, img: '/images/leather_sofa.png' },
   { name: 'Kitchen dishes', price: 19, img: '/images/pot.png' },
-  { name: 'Smart watches', price: 19, img: '/images/smartwatch.png' },
+  { name: 'Smart watches', price: 19, img: '/images/watch.png' },
   { name: 'Kitchen mixer', price: 100, img: '/images/kitchen_mixer.png' },
   { name: 'Blenders', price: 39, img: '/images/electric_blender.png' },
-  { name: 'Home appliance', price: 19, img: '/images/coffee_maker.png' },
+  { name: 'Home appliances', price: 19, img: '/images/home_appliances.png' },
   { name: 'Coffee maker', price: 10, img: '/images/coffee_maker.png' },
 ];
 
 export const CONSUMER_ELECTRONICS_PRODUCTS = [
   { name: 'Smart watches', price: 19, img: '/images/smartwatch.png' },
   { name: 'Cameras', price: 89, img: '/images/canon-camera.png' },
-  { name: 'Headphones', price: 10, img: '/images/gaming-headset.png' },
-  { name: 'Smart watches', price: 90, img: '/images/smartwatch.png' },
+  { name: 'Headphones', price: 10, img: '/images/headset.png' },
+  { name: 'Electric Blender', price: 90, img: '/images/electric_blender.png' },
   { name: 'Gaming set', price: 35, img: '/images/gaming-headset.png' },
   { name: 'Laptops & PC', price: 340, img: '/images/laptop.png' },
   { name: 'Smartphones', price: 19, img: '/images/phone1.png' },
-  { name: 'Electric kettle', price: 240, img: '/images/lamp.png' },
+  { name: 'Electric kettle', price: 240, img: '/images/kettle.png' },
 ];
 
 export const EXTRA_SERVICES = [
-  { name: 'Source from Industry Hubs', icon: 'SearchCircle', img: 'https://picsum.photos/seed/service1/200/120' },
-  { name: 'Customize Your Products', icon: 'Cube', img: 'https://picsum.photos/seed/service2/200/120' },
-  { name: 'Fast, reliable shipping by ocean or air', icon: 'PaperPlane', img: 'https://picsum.photos/seed/service3/200/120' },
-  { name: 'Product monitoring and inspection', icon: 'ShieldCheck', img: 'https://picsum.photos/seed/service4/200/120' },
+  { name: 'Source from Industry Hubs', icon: 'SearchCircle', img: '/images/source_from_industry_hubs.png' },
+  { name: 'Customize Your Products', icon: 'Cube', img: '/images/customize_products.png' },
+  { name: 'Fast, reliable shipping by ocean or air', icon: 'PaperPlane', img: '/images/shipping.png' },
+  { name: 'Product monitoring and inspection', icon: 'ShieldCheck', img: '/images/product_monitoring.png' },
 ];
 
 export const SUPPLIERS = [

@@ -38,7 +38,7 @@ const HeroSection: React.FC = () => (
                 </ul>
             </div>
             <div className="w-full lg:w-2/3 p-1 sm:p-5">
-                <div className="bg-gray-800 text-white p-8 rounded-lg h-full flex flex-col justify-center bg-cover bg-center" style={{ backgroundImage: "url('https://picsum.photos/id/1/1000/400')" }}>
+                <div className="bg-gray-800 text-white p-8 rounded-lg h-full flex flex-col justify-center bg-cover bg-center" style={{ backgroundImage: "url('/images/hero_image.png')" }}>
                     <h2 className="text-2xl lg:text-3xl">Latest trending</h2>
                     <h1 className="text-3xl lg:text-4xl font-bold mt-2">Electronic items</h1>
                     <button className="mt-6 bg-white text-dark font-semibold py-2 px-5 rounded-md self-start hover:bg-gray-200">Learn more</button>
@@ -64,7 +64,7 @@ const HeroSection: React.FC = () => (
 
 const MobileHero: React.FC = () => (
     <div className="lg:hidden p-4">
-        <div className="bg-gray-800 text-white p-6 rounded-lg h-48 flex flex-col justify-center bg-cover bg-center" style={{ backgroundImage: "url('https://picsum.photos/id/1/800/400')" }}>
+        <div className="bg-gray-800 text-white p-6 rounded-lg h-48 flex flex-col justify-center bg-cover bg-center" style={{ backgroundImage: "url('/images/Ecommerce Web Design (Community)_Page_01_Image_0003.png')" }}>
             <h2 className="text-xl">Latest trending</h2>
             <h1 className="text-2xl font-bold">Electronic items</h1>
             <button className="mt-4 bg-white text-dark font-semibold py-2 px-4 rounded-md self-start text-sm">Learn more</button>
@@ -137,7 +137,7 @@ const CategorySection: React.FC<{ title: string; image: string; products: { name
                     <Link to="/products" className="text-primary font-semibold">Source now &gt;</Link>
                 </div>
                 <div className="w-full lg:w-3/4 grid grid-cols-2 md:grid-cols-4">
-                    {products.slice(0, 4).map(product => (
+                    {products.slice(0, 8).map(product => (
                         <Link to="/products" key={product.name} className="p-2 lg:p-4 lg:border-l lg:border-b flex justify-between items-center hover:bg-gray-100">
                             <div className="pr-2">
                                 <p className="font-semibold text-sm lg:text-base">{product.name}</p>
@@ -153,7 +153,7 @@ const CategorySection: React.FC<{ title: string; image: string; products: { name
 )
 
 const InquirySection: React.FC = () => (
-    <section className="mt-5 rounded-lg bg-cover bg-center p-4 lg:p-8" style={{ backgroundImage: "url('https://picsum.photos/seed/inquirybg/1200/400')" }}>
+    <section className="mt-5 rounded-lg bg-cover bg-center p-4 lg:p-8" style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/Ecommerce Web Design (Community)_Page_01_Image_0040.png')" }}>
         <div className="flex flex-col lg:flex-row items-center">
             <div className="text-white lg:w-1/2">
                 <h2 className="text-2xl lg:text-3xl font-bold">An easy way to send requests to all suppliers</h2>
@@ -279,8 +279,8 @@ const HomePage: React.FC = () => {
                 <HeroSection />
                 <div className="lg:hidden p-4"><div className="border-t"></div></div>
                 <DealsAndOffers />
-                <CategorySection title="Home and outdoor" image="https://picsum.photos/seed/homebg/400/300" products={HOME_OUTDOOR_PRODUCTS} />
-                <CategorySection title="Consumer electronics" image="https://picsum.photos/seed/gadgetbg/400/300" products={CONSUMER_ELECTRONICS_PRODUCTS} />
+                <CategorySection title="Home and outdoor" image="/images/home&outdoor.png" products={HOME_OUTDOOR_PRODUCTS} />
+                <CategorySection title="Consumer electronics" image="/images/electronics.png" products={CONSUMER_ELECTRONICS_PRODUCTS} />
                 <InquirySection />
                 <RecommendedItems products={products} />
                 <ExtraServices />
