@@ -153,7 +153,7 @@ const CategorySection: React.FC<{ title: string; image: string; products: { name
 )
 
 const InquirySection: React.FC = () => (
-    <section className="mt-5 rounded-lg bg-cover bg-center p-4 lg:p-8" style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/Ecommerce Web Design (Community)_Page_01_Image_0040.png')" }}>
+    <section className="mt-5 rounded-lg bg-cover bg-center p-4 lg:p-8" style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/inquiry.png')" }}>
         <div className="flex flex-col lg:flex-row items-center">
             <div className="text-white lg:w-1/2">
                 <h2 className="text-2xl lg:text-3xl font-bold">An easy way to send requests to all suppliers</h2>
