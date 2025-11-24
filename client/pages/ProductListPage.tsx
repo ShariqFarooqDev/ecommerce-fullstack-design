@@ -136,17 +136,20 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
   const [sortBy, setSortBy] = useState('Newest');
   const [view, setView] = useState('list');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
-      const { products } = await getAllProducts();
+      const { products, totalPages } = await getAllProducts({ page: currentPage, limit: 12 });
       setAllProducts(products);
+      setTotalPages(totalPages);
       setLoading(false);
     };
 
     fetchProducts();
-  }, []);
+  }, [currentPage]);
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategories(prev => prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]);
@@ -282,11 +285,29 @@ const ProductListPage: React.FC<ProductListPageProps> = ({ isWishlisted, toggleW
           {/* Pagination */}
           <div className="flex justify-center lg:justify-end mt-8">
             <nav className="flex items-center space-x-2">
-              <button className="px-4 py-2 border rounded-md">&lt;</button>
-              <button className="px-4 py-2 border rounded-md bg-primary text-white">1</button>
-              <button className="px-4 py-2 border rounded-md">2</button>
-              <button className="px-4 py-2 border rounded-md">3</button>
-              <button className="px-4 py-2 border rounded-md">&gt;</button>
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 border rounded-md disabled:opacity-50"
+              >
+                &lt;
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`px-4 py-2 border rounded-md ${currentPage === page ? 'bg-primary text-white' : ''}`}
+                >
+                  {page}
+                </button>
+              ))}
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 border rounded-md disabled:opacity-50"
+              >
+                &gt;
+              </button>
             </nav>
           </div>
         </main>

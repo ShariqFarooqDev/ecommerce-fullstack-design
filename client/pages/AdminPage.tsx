@@ -113,7 +113,7 @@ const AdminPage: React.FC = () => {
                 </div>
             </div>
 
-            <div className="bg-white shadow-md rounded-lg overflow-hidden mb-4">
+            <div className="bg-white shadow-md rounded-lg overflow-x-auto mb-4">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                         <tr>

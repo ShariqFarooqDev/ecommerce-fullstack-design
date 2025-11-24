@@ -10,7 +10,9 @@ import CartPage from './pages/CartPage';
 import { CartItem, Product } from './types';
 import { UserIcon, HeartIcon, XIcon } from './components/Icons';
 
-const MobileMenu: React.FC<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => void; }> = ({ isOpen, setIsOpen }) => (
+import { User } from './context/AuthContext';
+
+const MobileMenu: React.FC<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => void; user: User | null; logout: () => void; }> = ({ isOpen, setIsOpen, user, logout }) => (
   <>
     <div className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity lg:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsOpen(false)}></div>
     <div className={`fixed top-0 left-0 h-full w-4/5 max-w-sm bg-white z-50 transform transition-transform lg:hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
@@ -18,7 +20,21 @@ const MobileMenu: React.FC<{ isOpen: boolean; setIsOpen: (isOpen: boolean) => vo
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center space-x-2">
             <UserIcon className="w-8 h-8 text-gray-500 bg-gray-200 rounded-full p-1" />
-            <span className="font-semibold">Sign in | Register</span>
+            {user ? (
+              <div className="flex flex-col">
+                <span className="font-semibold">Hi, {user.name}</span>
+                {user.role === 'admin' && (
+                  <Link to="/admin" onClick={() => setIsOpen(false)} className="text-sm text-primary text-left mb-1">Admin Panel</Link>
+                )}
+                <button onClick={() => { logout(); setIsOpen(false); }} className="text-sm text-primary text-left">Logout</button>
+              </div>
+            ) : (
+              <div className="flex space-x-1">
+                <Link to="/login" onClick={() => setIsOpen(false)} className="font-semibold hover:text-primary">Sign in</Link>
+                <span>|</span>
+                <Link to="/register" onClick={() => setIsOpen(false)} className="font-semibold hover:text-primary">Register</Link>
+              </div>
+            )}
           </div>
           <button onClick={() => setIsOpen(false)}>
             <XIcon className="w-6 h-6 text-gray-500" />
@@ -80,7 +96,7 @@ const AppContent: React.FC = () => {
   const [wishlist, setWishlist] = useState<Product[]>([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   // Load cart when user logs in
   useEffect(() => {
@@ -153,7 +169,7 @@ const AppContent: React.FC = () => {
 
   return (
     <>
-      <MobileMenu isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} />
+      <MobileMenu isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} user={user} logout={logout} />
       <div className="bg-gray-100 min-h-screen flex flex-col font-sans overflow-x-hidden">
         <Header
           cartItemCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}

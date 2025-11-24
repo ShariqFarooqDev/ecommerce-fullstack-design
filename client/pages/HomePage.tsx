@@ -64,7 +64,7 @@ const HeroSection: React.FC = () => (
 
 const MobileHero: React.FC = () => (
     <div className="lg:hidden p-4">
-        <div className="bg-gray-800 text-white p-6 rounded-lg h-48 flex flex-col justify-center bg-cover bg-center" style={{ backgroundImage: "url('/images/Ecommerce Web Design (Community)_Page_01_Image_0003.png')" }}>
+        <div className="bg-gray-800 text-white p-6 rounded-lg h-48 flex flex-col justify-center bg-cover bg-center" style={{ backgroundImage: "url('/images/hero_image.jpg')" }}>
             <h2 className="text-xl">Latest trending</h2>
             <h1 className="text-2xl font-bold">Electronic items</h1>
             <button className="mt-4 bg-white text-dark font-semibold py-2 px-4 rounded-md self-start text-sm">Learn more</button>
@@ -158,9 +158,8 @@ const InquirySection: React.FC = () => (
             <div className="text-white lg:w-1/2">
                 <h2 className="text-2xl lg:text-3xl font-bold">An easy way to send requests to all suppliers</h2>
                 <p className="mt-2 max-w-sm hidden lg:block">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-                <button className="lg:hidden mt-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-md text-sm">Send inquiry</button>
             </div>
-            <div className="bg-white p-6 rounded-lg lg:w-1/2 mt-5 lg:mt-0 w-full hidden lg:block">
+            <div className="bg-white p-6 rounded-lg lg:w-1/2 mt-5 lg:mt-0 w-full">
                 <h3 className="text-xl font-bold">Send quote to suppliers</h3>
                 <input type="text" placeholder="What item you need?" className="w-full bg-white border-2 border-gray-300 rounded-md p-2 mt-4" />
                 <textarea placeholder="Type more details" className="w-full bg-white border-2 border-gray-300 rounded-md p-2 mt-4 h-24"></textarea>

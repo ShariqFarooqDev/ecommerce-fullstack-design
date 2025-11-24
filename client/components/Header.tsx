@@ -214,13 +214,16 @@ const MobileHeader: React.FC<{ cartItemCount: number; toggleMobileMenu: () => vo
   const isHomePage = location.pathname === '/';
 
   const routeTitles: { [key: string]: string } = {
-    '/products': 'Mobile accessory',
+    '/products': 'Shop',
     '/cart': 'Shopping cart',
+    '/login': 'Sign In',
+    '/register': 'Register',
+    '/admin': 'Admin Dashboard',
   };
 
   let title = '';
   if (location.pathname.startsWith('/product/')) {
-    // Title for product page is handled inside the page component for mobile
+    title = 'Product Details';
   } else {
     title = routeTitles[location.pathname] || '';
   }
@@ -254,10 +257,6 @@ const MobileHeader: React.FC<{ cartItemCount: number; toggleMobileMenu: () => vo
 
           {location.pathname.startsWith('/product/') && (
             <>
-              <Link to="/cart" className="relative">
-                <CartIcon className="w-6 h-6 text-gray-600" />
-                {cartItemCount > 0 && <span className="absolute -top-2 -left-2 bg-orange text-white text-xs rounded-full h-4 w-4 flex items-center justify-center font-bold">{cartItemCount}</span>}
-              </Link>
               <UserIcon className="w-6 h-6 text-gray-600" />
             </>
           )}
