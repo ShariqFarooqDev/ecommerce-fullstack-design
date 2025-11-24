@@ -38,7 +38,7 @@ const HeroSection: React.FC = () => (
                 </ul>
             </div>
             <div className="w-full lg:w-2/3 p-1 sm:p-5">
-                <div className="bg-gray-800 text-white p-8 rounded-lg h-full flex flex-col justify-center bg-cover bg-center" style={{ backgroundImage: "url('/images/hero_image.png')" }}>
+                <div className="bg-gray-800 text-white p-8 rounded-lg h-full flex flex-col justify-center bg-cover bg-center" style={{ backgroundImage: "url('/images/hero_image.jpg')" }}>
                     <h2 className="text-2xl lg:text-3xl">Latest trending</h2>
                     <h1 className="text-3xl lg:text-4xl font-bold mt-2">Electronic items</h1>
                     <button className="mt-6 bg-white text-dark font-semibold py-2 px-5 rounded-md self-start hover:bg-gray-200">Learn more</button>
