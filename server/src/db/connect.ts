@@ -1,7 +1,20 @@
 import mongoose from "mongoose";
 
-const connectDB = (url: string) => {
-  return mongoose.connect(url);
+let isConnected = false;
+
+const connectDB = async (url: string) => {
+  if (isConnected) {
+    return;
+  }
+
+  try {
+    await mongoose.connect(url);
+    isConnected = true;
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    throw error;
+  }
 };
 
 export default connectDB;
