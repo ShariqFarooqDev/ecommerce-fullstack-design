@@ -20,6 +20,17 @@ const authMiddleware_1 = require("./middleware/authMiddleware");
 const path_1 = __importDefault(require("path"));
 // Serve static files
 app.use(express_1.default.static(path_1.default.join(__dirname, "../public")));
+// Middleware to ensure database connection (must be before routes)
+app.use(async (req, res, next) => {
+    try {
+        await (0, connect_1.default)(process.env.MONGO_URI || "mongodb://localhost:27017/ecommerce");
+        next();
+    }
+    catch (error) {
+        console.error("Database connection error:", error);
+        res.status(500).json({ msg: "Database connection failed" });
+    }
+});
 app.use("/api/v1/products", productRoutes_1.default);
 app.use("/api/v1/auth", authRoutes_1.default);
 app.use("/api/v1/upload", authMiddleware_1.authenticateUser, uploadRoutes_1.default);
