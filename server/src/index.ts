@@ -22,6 +22,17 @@ import path from "path";
 // Serve static files
 app.use(express.static(path.join(__dirname, "../public")));
 
+// Middleware to ensure database connection (must be before routes)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB(process.env.MONGO_URI || "mongodb://localhost:27017/ecommerce");
+    next();
+  } catch (error) {
+    console.error("Database connection error:", error);
+    res.status(500).json({ msg: "Database connection failed" });
+  }
+});
+
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/upload", authenticateUser, uploadRouter);
