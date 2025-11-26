@@ -1,6 +1,7 @@
 import { Product } from '../types';
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:3000/api/v1';
+export const SERVER_URL = (import.meta.env.VITE_SERVER_URL as string) || 'http://localhost:3000';
+export const API_BASE_URL = (import.meta.env.VITE_API_URL as string) || `${SERVER_URL}/api/v1`;
 
 export const getAllProducts = async (params?: { page?: number; limit?: number; search?: string }): Promise<{ products: Product[]; totalPages: number; currentPage: number; totalProducts: number }> => {
   try {

@@ -33,12 +33,17 @@ app.get("/", (req: Request, res: Response) => {
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI || "mongodb://localhost:27017/ecommerce");
-    app.listen(port, () => {
-      console.log(`[server]: Server is running at http://localhost:${port}`);
-    });
+    // Only listen if not running in Vercel (or if executed directly)
+    if (require.main === module) {
+      app.listen(port, () => {
+        console.log(`[server]: Server is running at http://localhost:${port}`);
+      });
+    }
   } catch (error) {
     console.log(error);
   }
 };
 
 start();
+
+export default app;

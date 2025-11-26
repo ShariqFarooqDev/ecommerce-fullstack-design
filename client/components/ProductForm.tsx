@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from '../types';
+import { SERVER_URL } from '../services/api';
 
 
 interface ProductFormProps {
@@ -166,7 +167,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onCancel }
                             {formData.image && (
                                 <div className="mt-2">
                                     <img
-                                        src={formData.image.startsWith('http') || formData.image.startsWith('data:') ? formData.image : `http://localhost:3000${formData.image}`}
+                                        src={formData.image.startsWith('http') || formData.image.startsWith('data:') ? formData.image : `${SERVER_URL}${formData.image}`}
                                         alt="Preview"
                                         className="h-20 w-20 object-cover rounded-md border"
                                     />
